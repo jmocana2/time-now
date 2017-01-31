@@ -1,0 +1,71 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+`time-now`
+Web component to control date and time
+
+@demo demo/index.html
+-->
+
+<dom-module id="time-now">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <time><span>{{weekday}}</span>, <span>{{day}}</span> de <span>{{monthday}}</span> de <span>{{year}}</span></time>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'time-now',
+
+      properties: {
+        day: {
+          type: String,
+          notify: true
+        },
+
+        weekday: {
+          type: String,
+          notify: true
+        },
+
+        monthday: {
+          type: String,
+          notify: true
+        },
+
+        year: {
+          type: Number,
+          notify: true
+        }
+      },
+
+      attached: function() {
+        // when we are inserted into DOM, start watching the time
+        var time = new Date();
+        var month = time.getMonth();
+
+        this.day = time.getDate();
+        this.weekday = this.getWeekday(time.getDay());
+        this.monthday = this.getMonthday(month);
+        this.year = time.getFullYear();
+      },
+
+      getWeekday: function(day) {
+        var weekdays = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"];
+        return weekdays[day];
+      },
+
+      getMonthday: function(month) {
+        var monthdays = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+        return monthdays[month];
+      }
+    });
+  })();
+  </script>
+</dom-module>
